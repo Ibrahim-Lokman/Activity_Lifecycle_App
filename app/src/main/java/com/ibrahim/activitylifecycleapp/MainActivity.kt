@@ -9,10 +9,12 @@ import com.ibrahim.activitylifecycleapp.databinding.ActivityMainBinding
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import kotlin.concurrent.fixedRateTimer
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,17 +24,19 @@ class MainActivity : AppCompatActivity() {
         binding.btnExit.setOnClickListener {
             finish()
         }
-        binding.textViewRefreshStatus.text = "Welcome to Activity Life Cycle App"
+
 
 
         Log.d("Sajeet Create", "I'm in onCreate()")
+
+        var seconds = 0
+        fixedRateTimer(period = 1000L) {
+            runOnUiThread {
+                seconds++
+                binding.textViewRefreshStatus.text = "Time is $seconds seconds"
+            }
+        }
     }
 
-    override fun onRestart() {
-        super.onRestart()
-        binding.textViewRefreshStatus.text = "App restarted"
-    }
 
-
-
-}
+ }
