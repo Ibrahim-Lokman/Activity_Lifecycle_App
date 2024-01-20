@@ -9,11 +9,19 @@ import com.ibrahim.activitylifecycleapp.databinding.ActivityMainBinding
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.util.Timer
 import kotlin.concurrent.fixedRateTimer
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
+    var seconds = 0
+    val timer:Timer = fixedRateTimer(period = 1000L) {
+        runOnUiThread {
+            seconds++
+            binding.textViewRefreshStatus.text = "Time is $seconds seconds"
+        }
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,17 +33,15 @@ class MainActivity : AppCompatActivity() {
             finish()
         }
 
-
-
         Log.d("Sajeet Create", "I'm in onCreate()")
 
-        var seconds = 0
-        fixedRateTimer(period = 1000L) {
-            runOnUiThread {
-                seconds++
-                binding.textViewRefreshStatus.text = "Time is $seconds seconds"
-            }
-        }
+
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+        timer.cancel()
     }
 
 
