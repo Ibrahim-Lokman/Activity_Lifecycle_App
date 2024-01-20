@@ -16,12 +16,8 @@ import kotlin.concurrent.fixedRateTimer
 class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
     var seconds = 0
-    val timer:Timer = fixedRateTimer(period = 1000L) {
-        runOnUiThread {
-            seconds++
-            binding.textViewRefreshStatus.text = "Time is $seconds seconds"
-        }
-    }
+    private lateinit var timer:Timer
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,8 +30,16 @@ class MainActivity : AppCompatActivity() {
         }
 
         Log.d("Sajeet Create", "I'm in onCreate()")
+    }
 
-
+    override fun onResume() {
+        super.onResume()
+      timer =  fixedRateTimer(period = 1000L) {
+            runOnUiThread {
+                seconds++
+                binding.textViewRefreshStatus.text = "Time is $seconds seconds"
+            }
+        }
 
     }
 
