@@ -11,6 +11,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         Toast.makeText(this, "I'm in onCreate()", Toast.LENGTH_SHORT).show()
-        Log.d("Sajeet", "I'm in onCreate()")
+        Log.d("Sajeet Create", "I'm in onCreate()")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Toast.makeText(this, "I'm in onDestroy()", Toast.LENGTH_SHORT).show()
+        Log.d("Sajeet Destroy", "I'm in onDestroy()")
     }
 }
