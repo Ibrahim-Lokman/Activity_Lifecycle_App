@@ -5,45 +5,47 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import com.ibrahim.activitylifecycleapp.databinding.ActivityMainBinding
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding : ActivityMainBinding
+    private var isFirstLoad = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        Toast.makeText(this, "I'm in onCreate()", Toast.LENGTH_SHORT).show()
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.btnExit.setOnClickListener {
+            finish()
+        }
+        binding.textViewRefreshStatus.text = "Welcome to Activity Life Cycle App"
+
+
         Log.d("Sajeet Create", "I'm in onCreate()")
-    }
-
-
-    override fun onStart() {
-        super.onStart()
-        Toast.makeText(this, "I'm in onStart()", Toast.LENGTH_SHORT).show()
-        Log.d("Sajeet Start", "I'm in onStart()")
     }
 
     override fun onResume() {
         super.onResume()
-        Toast.makeText(this, "I'm in onResume()", Toast.LENGTH_SHORT).show()
-        Log.d("Sajeet Resume", "I'm in onResume()")
 
-    }
+        if (isFirstLoad) {
+            binding.textViewRefreshStatus.text = "Welcome to app! First Load."
+            isFirstLoad = false
+        } else {
+            val currentTimeMillis = System.currentTimeMillis()
+            val currentTime = Date(currentTimeMillis)
 
-    override fun onPause() {
-        super.onPause()
-        Toast.makeText(this, "I'm in onPause()", Toast.LENGTH_SHORT).show()
-        Log.d("Sajeet Pause", "I'm in onPause()")
-    }
+            // Format the time to include hours, minutes, seconds, and milliseconds
+            val sdf = SimpleDateFormat("HH:mm:ss.SSS", Locale.getDefault())
+            val formattedTime = sdf.format(currentTime)
 
-    override fun onStop() {
-        super.onStop()
-        Toast.makeText(this, "I'm in onStop()", Toast.LENGTH_SHORT).show()
-        Log.d("Sajeet Stop", "I'm in onStop()")
-    }
+            binding.textViewRefreshStatus.text = "Welcome to app! \n onResume : Current time in seconds: $formattedTime"
 
-    override fun onDestroy() {
-        super.onDestroy()
-        Toast.makeText(this, "I'm in onDestroy()", Toast.LENGTH_SHORT).show()
-        Log.d("Sajeet Destroy", "I'm in onDestroy()")
-    }
+        }
+       }
+
+
 }
