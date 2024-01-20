@@ -13,7 +13,7 @@ import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
-    private var isFirstLoad = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -28,24 +28,11 @@ class MainActivity : AppCompatActivity() {
         Log.d("Sajeet Create", "I'm in onCreate()")
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onRestart() {
+        super.onRestart()
+        binding.textViewRefreshStatus.text = "App restarted"
+    }
 
-        if (isFirstLoad) {
-            binding.textViewRefreshStatus.text = "Welcome to app! First Load."
-            isFirstLoad = false
-        } else {
-            val currentTimeMillis = System.currentTimeMillis()
-            val currentTime = Date(currentTimeMillis)
-
-            // Format the time to include hours, minutes, seconds, and milliseconds
-            val sdf = SimpleDateFormat("HH:mm:ss.SSS", Locale.getDefault())
-            val formattedTime = sdf.format(currentTime)
-
-            binding.textViewRefreshStatus.text = "Welcome to app! \n onResume : Current time in seconds: $formattedTime"
-
-        }
-       }
 
 
 }
