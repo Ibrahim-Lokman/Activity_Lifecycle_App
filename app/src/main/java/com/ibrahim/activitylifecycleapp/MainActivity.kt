@@ -1,6 +1,8 @@
 package com.ibrahim.activitylifecycleapp
 
+import android.app.AlertDialog
 import android.app.Dialog
+import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -28,14 +30,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnExit.setOnClickListener {
-            finish()
+            showDialog()
+            File(filesDir, "btnExit.txt").writeText("btnExit".toString())
         }
 
         Log.d("Sajeet Create", "I'm in onCreate()")
 
        onBackPressedDispatcher.addCallback{
-           Log.d("Back Button Pressed", "I'm in onBackPressedDispatcher")
-           File(filesDir, "destroytimelog.txt").writeText("onBackPresed".toString())
+           showDialog()
+           File(filesDir, "onBackPresed.txt").writeText("onBackPresed".toString())
 
 
         }
@@ -62,6 +65,25 @@ class MainActivity : AppCompatActivity() {
 //        val userMsg = binding.textViewRefreshStatus.text
 //        File(filesDir, "destroytimelog.txt").writeText(userMsg.toString())
 //    }
+
+    private fun showDialog(){
+        AlertDialog.Builder(this)
+            .setTitle("Warning")
+            .setMessage("Are you sure you want to exit?")
+            .setPositiveButton("Yes"){_, _ ->
+                finish()
+            }
+            .setNegativeButton("No"){dialog, which ->
+                dialog.dismiss()
+            }
+            .setNeutralButton("Report Bug", object : DialogInterface.OnClickListener{
+                override fun onClick(dialog: DialogInterface?, which: Int) {
+                    Toast.makeText(this@MainActivity, "Bug Reported", Toast.LENGTH_SHORT).show()
+                }
+
+            })
+            .create().show()
+    }
 
 
 
