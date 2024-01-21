@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.addCallback
 import com.ibrahim.activitylifecycleapp.databinding.ActivityMainBinding
 import java.io.File
 import java.text.SimpleDateFormat
@@ -31,6 +32,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         Log.d("Sajeet Create", "I'm in onCreate()")
+
+       onBackPressedDispatcher.addCallback{
+           Log.d("Back Button Pressed", "I'm in onBackPressedDispatcher")
+           File(filesDir, "destroytimelog.txt").writeText("onBackPresed".toString())
+
+
+        }
     }
 
     override fun onResume() {
@@ -44,16 +52,18 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    override fun onPause() {
-        super.onPause()
-        timer.cancel()
-    }
+//    override fun onPause() {
+//        super.onPause()
+//        timer.cancel()
+//    }
+//
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        val userMsg = binding.textViewRefreshStatus.text
+//        File(filesDir, "destroytimelog.txt").writeText(userMsg.toString())
+//    }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        val userMsg = binding.textViewRefreshStatus.text
-        File(filesDir, "destroytimelog.txt").writeText(userMsg.toString())
-    }
+
 
 
  }
