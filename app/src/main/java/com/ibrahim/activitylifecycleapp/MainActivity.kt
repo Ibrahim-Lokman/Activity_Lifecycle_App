@@ -76,12 +76,14 @@ class MainActivity : AppCompatActivity() {
             .setNegativeButton("No"){dialog, which ->
                 dialog.dismiss()
             }
-            .setNeutralButton("Report Bug", object : DialogInterface.OnClickListener{
-                override fun onClick(dialog: DialogInterface?, which: Int) {
-                    Toast.makeText(this@MainActivity, "Bug Reported", Toast.LENGTH_SHORT).show()
-                }
-
-            })
+            .setNeutralButton("Report Bug"
+            ) { dialog, which ->
+                Toast.makeText(
+                    this@MainActivity,
+                    "Bug Reported",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
             .create().show()
     }
 
