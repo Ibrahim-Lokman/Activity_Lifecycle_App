@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import com.ibrahim.activitylifecycleapp.databinding.ActivityMainBinding
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -46,6 +47,12 @@ class MainActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         timer.cancel()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        val userMsg = binding.textViewRefreshStatus.text
+        File(filesDir, "destroytimelog.txt").writeText(userMsg.toString())
     }
 
 
