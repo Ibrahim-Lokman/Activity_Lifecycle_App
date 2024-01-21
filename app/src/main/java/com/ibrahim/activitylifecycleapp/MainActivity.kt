@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity() {
     private fun showDialog(){
         AlertDialog.Builder(this)
             .setTitle("Warning")
-            .setMessage("Are you sure you want to exit?")
+            .setView(R.layout.dialog_warning)
             .setPositiveButton("Yes"){_, _ ->
                 finish()
             }
@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity() {
                 dialog.dismiss()
             }
             .setNeutralButton("Report Bug"
-            ) { dialog, which ->
+            ) { _, _ ->
                 Toast.makeText(
                     this@MainActivity,
                     "Bug Reported",
