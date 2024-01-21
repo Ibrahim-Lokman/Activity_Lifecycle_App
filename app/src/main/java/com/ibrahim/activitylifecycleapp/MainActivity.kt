@@ -26,15 +26,20 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.btnExit.setOnClickListener {
-            showDialog()
-            File(filesDir, "btnExit.txt").writeText("btnExit".toString())
+        binding.savedDataPreview.text = savedInstanceState?.getString("savedTextViewMessage")
+
+        binding.btnExit.setOnClickListener { showDialog() }
+
+        binding.btnSave.setOnClickListener {
+           saveMessage()
         }
 
-        Log.d("Sajeet Create", "I'm in onCreate()")
+
 
        onBackPressedDispatcher.addCallback{
            showDialog()
@@ -42,6 +47,19 @@ class MainActivity : AppCompatActivity() {
 
 
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        val savedTextViewMessage = binding.editText.text.toString()
+        outState.putString("savedTextViewMessage", savedTextViewMessage)
+    }
+
+    private fun saveMessage() {
+
+        val userMsg = binding.editText.text
+        File(filesDir, "usermsg.txt").writeText(userMsg.toString())
+        binding.savedDataPreview.text = "Your message : \n\n$userMsg"
     }
 
     override fun onResume() {
