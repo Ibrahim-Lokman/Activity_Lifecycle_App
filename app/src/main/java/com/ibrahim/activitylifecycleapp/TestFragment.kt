@@ -11,8 +11,12 @@ import com.ibrahim.activitylifecycleapp.databinding.FragmentTestBinding
 class TestFragment : Fragment() {
 
      private lateinit var binding : FragmentTestBinding
+     private var fragmentListener: TestFragmentListener? = null
 
-
+        override fun onAttach(context: Context) {
+          super.onAttach(context)
+          fragmentListener = context as TestFragmentListener
+        }
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
             binding.textViewFragmentText.text = "Fragment Text: onCreate "
@@ -29,7 +33,19 @@ class TestFragment : Fragment() {
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
            binding.textViewFragmentText.text = "Fragment Text: onViewCreated "
+            binding.btnClearFragment.setOnClickListener {
+                fragmentListener?.clearActivityScreen()
+            }
         }
 
+       override fun onDetach() {
+         super.onDetach()
+         fragmentListener = null
+       }
+
+
+      interface TestFragmentListener{
+        fun clearActivityScreen()
+     }
 
 }

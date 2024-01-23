@@ -18,7 +18,7 @@ import java.util.Timer
 import kotlin.concurrent.fixedRateTimer
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() , TestFragment.TestFragmentListener{
     private lateinit var binding : ActivityMainBinding
     var seconds = 0
     private lateinit var timer:Timer
@@ -131,7 +131,11 @@ class MainActivity : AppCompatActivity() {
             .create().show()
     }
 
+    override fun clearActivityScreen() {
+        binding.editText.setText("")
+        binding.savedDataPreview.text = ""
+        removeFragment()
+    }
 
 
-
- }
+}
