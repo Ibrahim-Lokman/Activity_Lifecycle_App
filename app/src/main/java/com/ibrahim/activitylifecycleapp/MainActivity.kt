@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.addCallback
+import androidx.fragment.app.commit
 import com.ibrahim.activitylifecycleapp.databinding.ActivityMainBinding
 import java.io.File
 import java.text.SimpleDateFormat
@@ -21,6 +22,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
     var seconds = 0
     private lateinit var timer:Timer
+    val fragment = TestFragment()
 
 
 
@@ -40,6 +42,15 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+        binding.btnShowFrag.setOnClickListener {
+           showFragment()
+        }
+
+        binding.btnRemoveFrag.setOnClickListener {
+            removeFragment()
+        }
+
+
 
        onBackPressedDispatcher.addCallback{
            showDialog()
@@ -47,6 +58,21 @@ class MainActivity : AppCompatActivity() {
 
 
         }
+    }
+
+    private fun showFragment() {
+
+        supportFragmentManager.commit {
+            replace(R.id.fragment_container, fragment)
+
+        }
+    }
+
+    private fun removeFragment() {
+        supportFragmentManager.commit {
+            remove(fragment)
+        }
+
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
